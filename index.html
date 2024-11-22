@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bosses Island</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://i83.servimg.com/u/f83/19/48/18/17/sans_t13.jpg'); /* Remplacez par l'URL de votre fond */
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-attachment: fixed;
+    }
+
+    .content {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 1200px;
+      text-align: center;
+    }
+
+    h1, h2, h3 {
+      margin: 20px 0;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #de7fa7;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #00c2db;
+    }
+
+    #boss-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 80%;
+      margin: 0 auto;
+    }
+
+    .card-input input {
+      margin: 5px;
+      padding: 5px;
+    }
+
+    .card-input input[type="number"] {
+      width: 80px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .enemy-img {
+      width: 120px;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i83.servimg.com/u/f83/19/48/18/17/sans_t13.jpg'); /* Remplacez par l'URL de votre fond */
+      background-size: cover;
+      background-position: center;
+      filter: blur(0px);  /* Appliquez le flou seulement au fond */
+      z-index: -1;  /* Assurez-vous que ce fond reste derrière le contenu */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fond d'écran flou -->
+  <div class="background"></div>
+
+  <div id="app" class="content">
+    <!-- Page d'accueil -->
+    <div id="home" class="page active">
+      <h1>Bienvenue dans Bosses Island</h1>
+      <p>Choisissez un boss pour commencer votre combat !</p>
+      <div id="boss-list">
+        <button class="boss-btn" data-boss="boss1">Boss 1 : Z Fighters</button>
+        <button class="boss-btn" data-boss="boss2">Boss 2 : Pokemon</button>
+        <button class="boss-btn" data-boss="boss3">Boss 3 : Konoha</button>
+        <button class="boss-btn" data-boss="boss4">Boss 4 : Mario et Sonic</button>
+        <button class="boss-btn" data-boss="boss5">Boss 5 : Mugiwara</button>
+      </div>
+    </div>
+
+    <!-- Page Boss -->
+    <div id="boss-page" class="page">
+      <button id="back-btn">Retour à l'accueil</button>
+      <h2 id="boss-name">Nom du Boss</h2>
+      <p>Préparez votre équipe de 5 cartes !</p>
+
+     <div id="player-deck">
+  <h3>Entrez vos cartes :</h3>
+  <form id="deck-form">
+    <div id="card-container">
+      <!-- Formulaire pour 5 cartes -->
+      <div class="card-input">
+        <input type="text" placeholder="Nom de la carte 1" name="name[]" required>
+        <input type="number" placeholder="Force" name="force[]" min="60" max="99" required>
+        <input type="number" placeholder="Mana" name="mana[]" min="60" max="99" required>
+        <input type="number" placeholder="Vitesse" name="vitesse[]" min="60" max="99" required>
+        <input type="number" placeholder="Popularité" name="popularite[]" min="60" max="99" required>
+      </div>
+      <div class="card-input">
+        <input type="text" placeholder="Nom de la carte 2" name="name[]" required>
+        <input type="number" placeholder="Force" name="force[]" min="60" max="99" required>
+        <input type="number" placeholder="Mana" name="mana[]" min="60" max="99" required>
+        <input type="number" placeholder="Vitesse" name="vitesse[]" min="60" max="99" required>
+        <input type="number" placeholder="Popularité" name="popularite[]" min="60" max="99" required>
+      </div>
+      <div class="card-input">
+        <input type="text" placeholder="Nom de la carte 3" name="name[]" required>
+        <input type="number" placeholder="Force" name="force[]" min="60" max="99" required>
+        <input type="number" placeholder="Mana" name="mana[]" min="60" max="99" required>
+        <input type="number" placeholder="Vitesse" name="vitesse[]" min="60" max="99" required>
+        <input type="number" placeholder="Popularité" name="popularite[]" min="60" max="99" required>
+      </div>
+      <div class="card-input">
+        <input type="text" placeholder="Nom de la carte 4" name="name[]" required>
+        <input type="number" placeholder="Force" name="force[]" min="60" max="99" required>
+        <input type="number" placeholder="Mana" name="mana[]" min="60" max="99" required>
+        <input type="number" placeholder="Vitesse" name="vitesse[]" min="60" max="99" required>
+        <input type="number" placeholder="Popularité" name="popularite[]" min="60" max="99" required>
+      </div>
+      <div class="card-input">
+        <input type="text" placeholder="Nom de la carte 5" name="name[]" required>
+        <input type="number" placeholder="Force" name="force[]" min="60" max="99" required>
+        <input type="number" placeholder="Mana" name="mana[]" min="60" max="99" required>
+        <input type="number" placeholder="Vitesse" name="vitesse[]" min="60" max="99" required>
+        <input type="number" placeholder="Popularité" name="popularite[]" min="60" max="99" required>
+      </div>
+    </div>
+    <button type="submit">Commencer le combat</button>
+  </form>
+</div>
+      <!-- Zone de combat -->
+      <div id="combat-zone" class="hidden">
+        <h3>Combat en cours...</h3>
+        <div id="enemy-info"></div>
+        <div id="player-actions"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  let playerPoints = 0; // Points du joueur
+  let roundsWon = 0;    // Rounds gagnés
+  const homePage = document.getElementById("home");
+  const bossPage = document.getElementById("boss-page");
+  const backBtn = document.getElementById("back-btn");
+  const bossName = document.getElementById("boss-name");
+  const deckForm = document.getElementById("deck-form");
+  const combatZone = document.getElementById("combat-zone");
+  const enemyInfo = document.getElementById("enemy-info");
+  const playerActions = document.getElementById("player-actions");
+
+  let currentBoss = null;
+  let playerDeck = [];
+  let currentRound = 0;
+
+  // Liste des boss
+      const bosses = {
+        boss1: {
+          name: "Z Fighters",
+        rounds: [
+          { 
+            stat: "popularite", 
+            cards: [
+              { name: "Goku", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/goku14.jpg" }, 
+              { name: "Vegeta", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/vegeta14.jpg" },              
+	      { name: "Goku", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/goku710.jpg" },               	      
+	      { name: "Gohan", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/gohan310.jpg" }
+]
+  },
+          { 
+            stat: "vitesse", 
+            cards: [
+              { name: "Goku", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/goku611.jpg" }, 
+              { name: "Gotenks", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/gotenk11.jpg" },                            	      
+	      { name: "Vegeta", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/vegeta19.jpg" }
+            ]
+          },
+{ 
+            stat: "popularite", 
+            cards: [
+              { name: "Vegeta", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/goku14.jpg" }, 
+              { name: "Goku", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/vegeta14.jpg" },             	      
+	      { name: "Goku", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/gohan310.jpg" }
+]
+  },
+{ 
+            stat: "mana", 
+            cards: [
+              { name: "Gohan", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/gohan511.jpg" }, 
+              { name: "Goku", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/goku911.jpg" },              
+	      { name: "Gohan", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/gohan15.jpg" },               	      
+	      { name: "Gogeta", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/gogeta11.jpg" }
+]
+  },
+{ 
+            stat: "force", 
+            cards: [
+              { name: "Vegetto", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/vegett12.jpg" }, 
+              { name: "Vegeta", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/vegeta20.jpg" },             	      
+	      { name: "Trunks", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/trunks14.jpg" }
+]
+  },
+{ 
+            stat: "force", 
+            cards: [
+              { name: "Goku", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/goku512.jpg" }, 
+              { name: "Vegeta", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/vegeta21.jpg" }
+]
+  },
+        ],
+      },
+        boss2: {
+          name: "Pokemon",
+        rounds: [
+          { 
+            stat: "mana", 
+            cards: [
+              { name: "Mewtwo", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/mewtwo14.jpg" }, 
+              { name: "Dracaufeu", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/dracau16.jpg" },              
+	      { name: "Giratina", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/girati12.jpg" },               	      
+	      { name: "Celebi", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/celebi12.jpg" }
+]
+  },
+          { 
+            stat: "force", 
+            cards: [
+              { name: "Lucario", stat: 88, img: "https://i83.servimg.com/u/f83/19/48/18/17/lucari13.jpg" }, 
+              { name: "Tortank", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/tortan11.jpg" },                            	      
+	      { name: "Mewtwo", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/mewtwo15.jpg" }
+            ]
+          },
+{ 
+            stat: "vitesse", 
+            cards: [
+              { name: "Zeraora", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/zeraor11.jpg" },            	      
+	      { name: "Pikachu", stat: 88, img: "https://i83.servimg.com/u/f83/19/48/18/17/pikach15.jpg" }
+]
+  },
+{ 
+            stat: "popularite", 
+            cards: [
+              { name: "Rayquaza", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/rayqua11.jpg" },             	      
+	      { name: "Dracaufeu", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/dracau17.jpg" }
+]
+  },
+{ 
+            stat: "mana", 
+            cards: [
+              { name: "Mewtwo", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/mewtwo16.jpg" },             	      
+	      { name: "Arceus", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/arceus14.jpg" }
+]
+  },
+{ 
+            stat: "force", 
+            cards: [
+              { name: "Mewtwo", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/mewtwo18.jpg" }, 
+              { name: "Mew", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/mew210.jpg" }
+]
+  },
+        ],
+      },
+boss3: {
+          name: "Konoha",
+        rounds: [
+          { 
+            stat: "popularite", 
+            cards: [
+              { name: "Naruto", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/naruto24.jpg" }, 
+              { name: "Naruto", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/naruto25.jpg" },              
+	      { name: "Sasuke", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/sasuke23.jpg" },               	      
+	      { name: "Sasuke", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/sasuke22.jpg" }
+]
+  },
+          { 
+            stat: "force", 
+            cards: [
+              { name: "Tsunade", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/tsunad12.jpg" }, 
+              { name: "Tobirama", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/tobira12.jpg" },                            	      
+	      { name: "Jiraya", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/jiraya11.jpg" }
+            ]
+          },
+{ 
+            stat: "mana", 
+            cards: [
+              { name: "Madara", stat: 96, img: "https://i83.servimg.com/u/f83/19/48/18/17/madara14.jpg" },          	      
+	      { name: "Hashirama", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/hashir12.jpg" }
+]
+  },
+{ 
+            stat: "popularite", 
+            cards: [
+              { name: "Kurama", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/kurama12.jpg" }, 
+              { name: "Naruto", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/naruto26.jpg" },                           	      
+	      { name: "Minato", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/minato14.jpg" }
+]
+  },
+{ 
+            stat: "mana", 
+            cards: [
+              { name: "Naruto", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/naruto27.jpg" },             	      
+	      { name: "Sasuke", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/sasuke24.jpg" }
+]
+  },
+{ 
+            stat: "force", 
+            cards: [
+              { name: "Itachi", stat: 96, img: "https://i83.servimg.com/u/f83/19/48/18/17/itachi13.jpg" }, 
+              { name: "Pain", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/pain510.jpg" }
+]
+  },
+        ],
+      },
+boss4: {
+          name: "Mario et Sonic",
+        rounds: [
+          { 
+            stat: "force", 
+            cards: [
+              { name: "Sonic", stat: 88, img: "https://i83.servimg.com/u/f83/19/48/18/17/metals10.jpg" },           
+	      { name: "Knuckles", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/knuckl11.jpg" },               	      
+	      { name: "Metal Sonic", stat: 86, img: "https://i83.servimg.com/u/f83/19/48/18/17/metals10.jpg" }
+]
+  },
+          { 
+            stat: "vitesse", 
+            cards: [
+              { name: "Sonic", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/sonic10.jpg" }, 
+              { name: "Shadow", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/shadow11.jpg" },                            	      
+	      { name: "Mario", stat: 88, img: "https://i83.servimg.com/u/f83/19/48/18/17/mario310.jpg" }
+            ]
+          },
+{ 
+            stat: "popularite", 
+            cards: [
+              { name: "Mario", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/mario10.jpg" },    
+	      { name: "Mario", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/mario210.jpg" },       	      
+	      { name: "Peach", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/peach10.jpg" }
+]
+  },
+{ 
+            stat: "force", 
+            cards: [
+              { name: "Shadow", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/shadow12.jpg" }, 
+              { name: "Sonic", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/sonic510.jpg" },                           	      
+	      { name: "Bowser", stat: 96, img: "https://i83.servimg.com/u/f83/19/48/18/17/bowser10.jpg" }
+]
+  },
+{ 
+            stat: "vitesse", 
+            cards: [
+              { name: "Sonic", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/sonic410.jpg" },             	      
+	      { name: "Sonic", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/sonic210.jpg" }
+]
+  },
+{ 
+            stat: "mana", 
+            cards: [
+              { name: "Mario", stat: 96, img: "https://i83.servimg.com/u/f83/19/48/18/17/mario510.jpg" }, 
+              { name: "Sonic", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/sonic_10.jpg" }
+]
+  },
+        ],
+      },
+boss5: {
+          name: "Mugiwara",
+        rounds: [
+          { 
+            stat: "popularite", 
+            cards: [
+              { name: "Chopper", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/choppe11.jpg" },  
+	      { name: "Nami", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/nami210.jpg" },         
+	      { name: "Sanji", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/sanji210.jpg" },               	      
+	      { name: "Francky", stat: 86, img: "https://i83.servimg.com/u/f83/19/48/18/17/franck10.jpg" }
+]
+  },
+          { 
+            stat: "force", 
+            cards: [
+              { name: "Luffy", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/luffy810.jpg" }, 
+              { name: "Jinbe", stat: 90, img: "https://i83.servimg.com/u/f83/19/48/18/17/jinbe11.jpg" },                            	      
+	      { name: "Zoro", stat: 93, img: "https://i83.servimg.com/u/f83/19/48/18/17/zoroju10.jpg" }
+            ]
+          },
+{ 
+            stat: "popularite", 
+            cards: [
+              { name: "Zoro", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/zoro310.jpg" },    
+	      { name: "Luffy", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/luffy410.jpg" },       	      
+	      { name: "Robin", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/robin_11.jpg" }
+]
+  },
+{ 
+            stat: "vitesse", 
+            cards: [
+              { name: "Luffy", stat: 96, img: "https://i83.servimg.com/u/f83/19/48/18/17/luffy710.jpg" }, 
+              { name: "Sanji", stat: 92, img: "https://i83.servimg.com/u/f83/19/48/18/17/sanji510.jpg" },                           	      
+	      { name: "Luffy", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/luffy110.jpg" }
+]
+  },
+{ 
+            stat: "mana", 
+            cards: [
+              { name: "Ace", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/ace410.jpg" },      
+	      { name: "Law", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/law510.jpg" },         	      
+	      { name: "Yamato", stat: 94, img: "https://i83.servimg.com/u/f83/19/48/18/17/yamato10.jpg" }
+]
+  },
+{ 
+            stat: "popularite", 
+            cards: [
+              { name: "Zoro", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/zoroju11.jpg" }, 
+              { name: "Luffy", stat: 95, img: "https://i83.servimg.com/u/f83/19/48/18/17/luffy_11.jpg" }
+]
+  },
+        ],
+      },
+      };
+  // Affichage des boss
+  document.querySelectorAll('.boss-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const bossId = btn.dataset.boss;
+      currentBoss = bosses[bossId];
+      bossName.textContent = currentBoss.name;
+      homePage.classList.remove('active');
+      bossPage.classList.add('active');
+    });
+  });
+
+  // Retour à l'accueil
+  backBtn.addEventListener('click', () => {
+    bossPage.classList.remove('active');
+    homePage.classList.add('active');
+    combatZone.classList.add('hidden');
+    playerDeck = [];
+    currentRound = 0;
+  });
+
+  // Début du combat
+  deckForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    playerDeck = Array.from(deckForm.elements)
+      .filter(input => input.name && input.name.includes("force"))
+      .map((_, index) => ({
+        name: deckForm.elements[`name[]`][index].value,
+        force: parseInt(deckForm.elements[`force[]`][index].value, 10),
+        mana: parseInt(deckForm.elements[`mana[]`][index].value, 10),
+        vitesse: parseInt(deckForm.elements[`vitesse[]`][index].value, 10),
+        popularite: parseInt(deckForm.elements[`popularite[]`][index].value, 10),
+      }));
+
+    startCombat();
+  });
+
+  function startCombat() {
+    if (!currentBoss || !currentBoss.rounds) return;
+    combatZone.classList.remove('hidden');
+    nextRound();
+  }
+
+  function nextRound() {
+  if (currentRound >= currentBoss.rounds.length) {
+    endCombat();
+    return;
+  }
+
+  const round = currentBoss.rounds[currentRound];
+  const bossCards = round.cards;
+
+  enemyInfo.innerHTML = `
+    <h3>Round ${currentRound + 1}</h3>
+    <p>Statistique : <strong>${round.stat}</strong></p>
+    <p>Cartes du Boss :</p>
+    ${bossCards.map(card => `
+      <div>
+        <p><strong>${card.name}</strong> (${card.stat})</p>
+        <img src="${card.img}" alt="${card.name}" class="enemy-img">
+      </div>
+    `).join('')}
+  `;
+
+  playerActions.innerHTML = `
+    <h3>Sélectionnez ${bossCards.length} cartes :</h3>
+    ${playerDeck.map((card, index) => `
+      <label>
+        <input type="checkbox" data-index="${index}">
+        ${card.name} (${card[round.stat]})
+      </label>
+    `).join('')}
+    <button id="confirm-selection">Confirmer la sélection</button>
+  `;
+
+  document.getElementById('confirm-selection').addEventListener('click', () => {
+    const selectedCards = Array.from(document.querySelectorAll('#player-actions input[type="checkbox"]:checked'))
+      .map(input => playerDeck[parseInt(input.dataset.index, 10)]);
+
+    if (selectedCards.length !== bossCards.length) {
+      alert(`Veuillez sélectionner exactement ${bossCards.length} cartes.`);
+    } else {
+      playRound(selectedCards, bossCards, round.stat);
+    }
+  });
+}
+
+ function playRound(playerCards, bossCards, stat) {
+  // Calcul des sommes des statistiques pour les cartes choisies
+  const playerStatSum = playerCards.reduce((total, card) => total + card[stat], 0);
+  const bossStatSum = bossCards.reduce((total, card) => total + card.stat, 0);
+
+  // Résultat basé sur les totaux
+  let result;
+  if (playerStatSum > bossStatSum) {
+    result = "Victoire";
+    playerPoints += 250; // Récompense pour un round gagné
+    roundsWon++;
+  } else if (playerStatSum === bossStatSum) {
+    result = "Égalité";
+  } else {
+    result = "Défaite";
+  }
+
+  alert(`Résultat du round : ${result}!\n
+         Total du joueur (${stat}): ${playerStatSum}\n
+         Total du boss (${stat}): ${bossStatSum}\n
+         Points actuels : ${playerPoints}`);
+
+  currentRound++;
+  nextRound();
+}
+function endCombat() {
+  if (roundsWon === currentBoss.rounds.length) {
+    playerPoints += 1000; // Bonus pour avoir gagné tous les tours
+    alert(`Bravo ! Vous avez gagné tous les rounds ! Bonus de 1 000 points ajouté.\n
+           Points finaux : ${playerPoints}`);
+  } else {
+    alert(`Combat terminé !\n
+           Points finaux : ${playerPoints}`);
+  }
+
+  // Réinitialisation pour un nouveau combat
+  combatZone.classList.add('hidden');
+  roundsWon = 0;
+  playerPoints = 0;
+}
+
+});
+  </script>
+</body>
+</html>
